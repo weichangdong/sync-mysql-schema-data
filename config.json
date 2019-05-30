@@ -1,0 +1,18 @@
+{
+     "source":"work:work@dev@(x.x.x.x:3306)/admin",
+     "dest":"root:root@(127.0.0.1:3306)/admin",
+     "alter_ignore":{
+        "op_logger*":{
+        }
+     },
+     "tables":["schema_info"],
+     "sync_data_tables":["user_e_trans","staff_loan_data"],
+     "tables_ignore":["op_logger*"],
+     "email":{
+          "send_mail":false,
+         "smtp_host":"smtp.163.com:25",
+         "from":"xxx@163.com",
+         "password":"xxx",
+         "to":"xxx@163.com"
+     }
+}
