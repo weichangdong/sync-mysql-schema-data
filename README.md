@@ -31,8 +31,8 @@ Usage of ./main:
 mysql schema && data sync tools 0.3
 Base On https://github.com/hidu/mysql-schema-sync/
 ```
-#### `sync_data` ./main -sync_data true,则表示这个操作是同步数据.否则就是同步数据结构.
-#### `sync_data_truncate` ./main -sync_data_truncate true,表示同步源数据的时候,是否truncate本地的数据,没有备份哦,操作需谨慎. 如果不为true,则同步数据的时候,如果目标的数据表,有自增的属性,则id的值是null,否则还是保留原有的id插入.
+#### `sync_data` ./main -sync_data=true,则表示这个操作是同步数据.否则就是同步数据结构.
+#### `sync_data_truncate` ./main -sync_data_truncate=true,表示同步源数据的时候,是否truncate本地的数据,没有备份哦,操作需谨慎. 如果不为true,则同步数据的时候,如果目标的数据表,有自增的属性,则id的值是null,否则还是保留原有的id插入.
 #### 配置项里面的`sync_data_tables`,指定需要同步数据的数据表.
 
 ```
