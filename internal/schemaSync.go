@@ -95,10 +95,10 @@ func (sc *SchemaSync) getSchemaDiff(alter *TableAlterData) string {
 			alterSQL = "ADD " + dt
 		}
 		if alterSQL != "" {
-			log.Println("trace check column.alter ", fmt.Sprintf("%s.%s", table, name), "alterSQL=", alterSQL)
+			//log.Println("trace check column.alter ", fmt.Sprintf("%s.%s", table, name), "alterSQL=", alterSQL)
 			alterLines = append(alterLines, alterSQL)
 		} else {
-			log.Println("trace check column.alter ", fmt.Sprintf("%s.%s", table, name), "not change")
+			//log.Println("trace check column.alter ", fmt.Sprintf("%s.%s", table, name), "not change")
 		}
 	}
 
@@ -112,9 +112,9 @@ func (sc *SchemaSync) getSchemaDiff(alter *TableAlterData) string {
 			if _, has := sourceMyS.Fields[name]; !has {
 				alterSQL := fmt.Sprintf("drop `%s`", name)
 				alterLines = append(alterLines, alterSQL)
-				log.Println("trace check column.drop ", fmt.Sprintf("%s.%s", table, name), "alterSQL=", alterSQL)
+				//log.Println("trace check column.drop ", fmt.Sprintf("%s.%s", table, name), "alterSQL=", alterSQL)
 			} else {
-				log.Println("trace check column.drop ", fmt.Sprintf("%s.%s", table, name), "not change")
+				//log.Println("trace check column.drop ", fmt.Sprintf("%s.%s", table, name), "not change")
 			}
 		}
 	}
@@ -128,7 +128,7 @@ func (sc *SchemaSync) getSchemaDiff(alter *TableAlterData) string {
 			continue
 		}
 		dIdx, has := destMyS.IndexAll[indexName]
-		log.Println("trace indexName---->[", fmt.Sprintf("%s.%s", table, indexName), "] dest_has:", has, "\ndest_idx:", dIdx, "\nsource_idx:", idx)
+		//log.Println("trace indexName---->[", fmt.Sprintf("%s.%s", table, indexName), "] dest_has:", has, "\ndest_idx:", dIdx, "\nsource_idx:", idx)
 		alterSQL := ""
 		if has {
 			if idx.SQL != dIdx.SQL {
@@ -139,9 +139,9 @@ func (sc *SchemaSync) getSchemaDiff(alter *TableAlterData) string {
 		}
 		if alterSQL != "" {
 			alterLines = append(alterLines, alterSQL)
-			log.Println("trace check index.alter ", fmt.Sprintf("%s.%s", table, indexName), "alterSQL=", alterSQL)
+			//log.Println("trace check index.alter ", fmt.Sprintf("%s.%s", table, indexName), "alterSQL=", alterSQL)
 		} else {
-			log.Println("trace check index.alter ", fmt.Sprintf("%s.%s", table, indexName), "not change")
+			//log.Println("trace check index.alter ", fmt.Sprintf("%s.%s", table, indexName), "not change")
 		}
 	}
 
@@ -184,9 +184,9 @@ func (sc *SchemaSync) getSchemaDiff(alter *TableAlterData) string {
 		}
 		if alterSQL != "" {
 			alterLines = append(alterLines, alterSQL)
-			log.Println("trace check foreignKey.alter ", fmt.Sprintf("%s.%s", table, foreignName), "alterSQL=", alterSQL)
+			//log.Println("trace check foreignKey.alter ", fmt.Sprintf("%s.%s", table, foreignName), "alterSQL=", alterSQL)
 		} else {
-			log.Println("trace check foreignKey.alter ", fmt.Sprintf("%s.%s", table, foreignName), "not change")
+			//log.Println("trace check foreignKey.alter ", fmt.Sprintf("%s.%s", table, foreignName), "not change")
 		}
 	}
 
@@ -205,9 +205,9 @@ func (sc *SchemaSync) getSchemaDiff(alter *TableAlterData) string {
 			}
 			if dropSQL != "" {
 				alterLines = append(alterLines, dropSQL)
-				log.Println("trace check foreignKey.drop ", fmt.Sprintf("%s.%s", table, foreignName), "alterSQL=", dropSQL)
+				//log.Println("trace check foreignKey.drop ", fmt.Sprintf("%s.%s", table, foreignName), "alterSQL=", dropSQL)
 			} else {
-				log.Println("trace check foreignKey.drop ", fmt.Sprintf("%s.%s", table, foreignName), "not change")
+				//log.Println("trace check foreignKey.drop ", fmt.Sprintf("%s.%s", table, foreignName), "not change")
 			}
 		}
 	}
@@ -270,15 +270,15 @@ func CheckSchemaDiff(cfg *Config) {
 
 	changedTables := make(map[string][]*TableAlterData)
 
-	for index, table := range newTables {
-		log.Printf("Index : %d Table : %s\n", index, table)
+	for _, table := range newTables {
+		//log.Printf("Index : %d Table : %s\n", index, table)
 		if !cfg.CheckMatchTables(table) {
-			log.Println("Table:", table, "skip")
+			//log.Println("Table:", table, "skip")
 			continue
 		}
 
 		if cfg.CheckMatchIgnoreTables(table) == true {
-			log.Println("Table:", table, "skip")
+			//log.Println("Table:", table, "skip")
 			continue
 		}
 
@@ -300,11 +300,11 @@ func CheckSchemaDiff(cfg *Config) {
 			}
 			changedTables[groupKey] = append(changedTables[groupKey], sd)
 		} else {
-			log.Println("table:", table, "not change,", sd)
+			//log.Println("table:", table, "not change,", sd)
 		}
 	}
 
-	log.Println("trace changedTables:", changedTables)
+	//log.Println("trace changedTables:", changedTables)
 
 	countSuccess := 0
 	countFailed := 0
