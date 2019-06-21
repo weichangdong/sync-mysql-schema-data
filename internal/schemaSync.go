@@ -371,20 +371,25 @@ func SyncTableData(cfg *Config) {
 		log.Println("[SyncTableData] no tables need sync")
 		return
 	}
-
-	defer sc.DestDb.Db.Close()
-	defer sc.SourceDb.Db.Close()
 	// 每次同步多少条
 	var limitNum float64 = 100
 	for _, oneTable := range needSyncDataTables {
 		if cfg.SyncDataTruncate == true {
-			sc.DestDb.Db.Exec("truncate  table " + oneTable)
+			_, err := sc.DestDb.Db.Exec("truncate  table " + oneTable)
+			if err != nil {
+				log.Println("[SyncTableData] truncate table error :", oneTable, " error:", err)
+				continue
+			}
 			log.Println("[SyncTableData] truncate table:", oneTable)
 		}
 		//查询数据表 是否自增
 		hasAutoIncrement := true
 		sqlTableStatus := fmt.Sprintf("show  table  status where  Name='%s'", oneTable)
 		tableStatusData := sc.DestDb.QueryAll(sqlTableStatus)
+		if len(tableStatusData) == 0 {
+			log.Println("[SyncTableData] show table status error:", sqlTableStatus)
+			continue
+		}
 		autoIncrement := tableStatusData[0]["Auto_increment"]
 		dataType := reflect.TypeOf(autoIncrement)
 		if dataType == nil {

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"runtime"
 	"strings"
 
 	"github.com/hidu/mysql-schema-sync/internal"
@@ -81,6 +82,7 @@ func main() {
 	defer (func() {
 		if err := recover(); err != nil {
 			log.Println(err)
+			log.Println(fullStack())
 			cfg.SendMailFail(fmt.Sprintf("%s", err))
 			log.Fatalln("exit")
 		}
@@ -93,4 +95,10 @@ func main() {
 		internal.SyncTableData(cfg)
 	}
 
+}
+
+func fullStack() string {
+	var buf [2 << 11]byte
+	runtime.Stack(buf[:], true)
+	return string(buf[:])
 }
