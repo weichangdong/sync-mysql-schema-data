@@ -412,7 +412,7 @@ func SyncTableData(cfg *Config) {
 				insertSql := buildInsertSql(oneTable, valObj, cfg.SyncDataTruncate, hasAutoIncrement)
 				insertResult, insertErr := sc.DestDb.Db.Exec(insertSql)
 				if insertResult == nil || insertErr != nil {
-					log.Println("[SyncTableData] insert error:", insertErr, " table:", oneTable)
+					log.Println("[SyncTableData] insert error:", insertErr, " table:", oneTable, "sql:", insertSql)
 					continue
 				}
 				insertId, insertErr := insertResult.LastInsertId()
@@ -473,6 +473,8 @@ func buildInsertSql(tableName string, insertTmp map[string]interface{}, truncate
 			} else {
 				valueOk += "'" + strings.Replace(v.(string), "'", `\'`, -1) + "'" + suffix
 			}
+		case nil:
+			valueOk += "'NULL'" + suffix
 		}
 	}
 
