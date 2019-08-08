@@ -67,7 +67,7 @@ func (cfg *Config) CheckMatchIgnoreTables(name string) bool {
 		return true
 	}
 	for _, tableName := range cfg.TablesIGNORE {
-		if simpleMatch(tableName, name, "CheckMatchTables") {
+		if simpleMatch(tableName, name, "CheckMatchIgnoreTables") {
 			return true
 		}
 	}

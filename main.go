@@ -21,7 +21,7 @@ var syncDataTruncate = flag.Bool("sync_data_truncate", false, "is need truncate 
 var source = flag.String("source", "", "mysql dsn source,eg: test@(10.10.0.1:3306)/test\n\twhen it is not empty ignore [-conf] param")
 var dest = flag.String("dest", "", "mysql dsn dest,eg test@(127.0.0.1:3306)/imis")
 var tables = flag.String("tables", "", "table names to check\n\teg : product_base,order_*")
-var tablesIGNORE = flag.String("tables_ignore", "", "table names to ignore check\n\teg : product_base,order_*")
+var tablesIGNORE = flag.String("tables_ignore", "", "table names to ignore check and ignore sync data\n\teg : product_base,order_*")
 var mailTo = flag.String("mail_to", "", "overwrite config's email.to")
 
 func init() {

@@ -374,6 +374,11 @@ func SyncTableData(cfg *Config) {
 	// 每次同步多少条
 	var limitNum float64 = 100
 	for _, oneTable := range needSyncDataTables {
+
+		if cfg.CheckMatchIgnoreTables(oneTable) == true {
+			log.Println("[SyncTableData] ignore table:", oneTable)
+			continue
+		}
 		if cfg.SyncDataTruncate == true {
 			_, err := sc.DestDb.Db.Exec("truncate  table " + oneTable)
 			if err != nil {
