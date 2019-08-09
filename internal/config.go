@@ -61,6 +61,19 @@ func (cfg *Config) CheckMatchTables(name string) bool {
 	return false
 }
 
+// CheckMatchSyncTables check sync table is match
+func (cfg *Config) CheckMatchSyncTables(name string) bool {
+	if len(cfg.SyncDataTables) == 0 {
+		return false
+	}
+	for _, tableName := range cfg.SyncDataTables {
+		if simpleMatch(tableName, name, "CheckMatchSyncTables") {
+			return true
+		}
+	}
+	return false
+}
+
 // CheckMatchIgnoreTables check table_Ignore is match
 func (cfg *Config) CheckMatchIgnoreTables(name string) bool {
 	if len(cfg.TablesIGNORE) == 0 {

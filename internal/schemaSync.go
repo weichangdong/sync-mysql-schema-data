@@ -365,16 +365,27 @@ func SyncTableData(cfg *Config) {
 		statics.timer.stop()
 	})()
 	sc := NewSchemaSync(cfg)
+
 	needSyncDataTables := cfg.SyncDataTables
 	log.Println("[SyncTableData] tables:", needSyncDataTables)
 	if len(needSyncDataTables) <= 0 {
 		log.Println("[SyncTableData] no tables need sync")
 		return
 	}
+
+	// 源数据库所有的表
+	allSourceTables := sc.SourceDb.GetTableNames()
+	needSyncDataTablesOk := []string{}
+	for _, tableTmp := range allSourceTables {
+		if cfg.CheckMatchSyncTables(tableTmp) == false {
+			continue
+		}
+		needSyncDataTablesOk = append(needSyncDataTablesOk, tableTmp)
+	}
+
 	// 每次同步多少条
 	var limitNum float64 = 100
-	for _, oneTable := range needSyncDataTables {
-
+	for _, oneTable := range needSyncDataTablesOk {
 		if cfg.CheckMatchIgnoreTables(oneTable) == true {
 			log.Println("[SyncTableData] ignore table:", oneTable)
 			continue
