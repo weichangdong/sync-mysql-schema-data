@@ -36,8 +36,8 @@ Base On https://github.com/hidu/mysql-schema-sync/
 #### 配置项里面的`sync_data_tables`,指定需要同步数据的数据表.
 
 ```
-"sync_data_tables":["user_e_trans","staff_loan_data"],
-暂时不支持正则,其实加上也很简单.先拿全表,然后根据这个配置获取匹配的表.有兴趣再说了.
+"sync_data_tables":["user_e_trans*","staff_loan_data"],
+支持正则了
 ```
 #### 另外说明,这个工具自己随手写的,可能比较粗糙,最近也特忙,可能有一些问题.如果使用的时候,遇到了,可以留言,我会处理的.
 #### QQ:1694669
