@@ -490,7 +490,7 @@ func buildInsertSql(tableName string, insertTmp map[string]interface{}, truncate
 				valueOk += "'" + strings.Replace(v.(string), "'", `\'`, -1) + "'" + suffix
 			}
 		case nil:
-			valueOk += "'NULL'" + suffix
+			valueOk += "NULL" + suffix
 		}
 	}
 
