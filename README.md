@@ -1,5 +1,13 @@
 ## sync-mysql-schema-data
 基于 [mysql-schema-sync](github.com/hidu/mysql-schema-sync) 开发的同步数据的工具.
+### 安装
+需要有golang的执行环境（直接下载编译好的文件也可以）
+git clone https://github.com/weichangdong/sync-mysql-schema-data.git
+cd sync-mysql-schema-data
+go mod tidy
+go build main.go
+./main -h
+
 ### 使用
 #### 多数用法,参看[mysql-schema-sync](github.com/hidu/mysql-schema-sync)的说明
 ```
